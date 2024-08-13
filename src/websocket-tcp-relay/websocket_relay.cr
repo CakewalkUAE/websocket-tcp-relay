@@ -59,9 +59,9 @@ module WebSocketTCPRelay
           socket.write(bytes)
         end
         spawn(name: "WS #{remote_addr}") do
-          begin
-              mem = IO::Memory.new(4096)
-              buffer = Bytes.new(4096)
+          mem = IO::Memory.new(4096)
+          buffer = Bytes.new(4096)
+          begin     
             if amqp_protocol.receive
               loop do
                 frame = AMQ::Protocol::Frame.from_io(socket)
@@ -79,6 +79,8 @@ module WebSocketTCPRelay
           rescue ex
             puts "#{remote_addr} disconnected: #{ex.inspect}"
           ensure
+            mem = nil
+            buffer = nil
             ws.close rescue nil
             socket.close rescue nil
           end
