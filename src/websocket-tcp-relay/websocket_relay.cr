@@ -94,6 +94,8 @@ module WebSocketTCPRelay
         ws.close rescue nil
         # Nil out the context to allow GC to clean it up
         tls_ctx = nil if tls_ctx
+      ensure
+        puts "#{remote_addr} disconnected in Ensure";
       
       end
     end
