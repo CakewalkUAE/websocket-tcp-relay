@@ -84,7 +84,7 @@ module WebSocketTCPRelay
             ws.close rescue nil
             socket.close rescue nil
             amqp_protocol.close rescue nil
-            tls_ctx.try(&.close) rescue nil if tls_ctx
+            
           end
         end
         puts "#{remote_addr} connected to upstream"
