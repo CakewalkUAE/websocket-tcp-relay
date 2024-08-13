@@ -6,6 +6,7 @@ module WebSocketTCPRelay
   class WebSocketRelay
     def self.new(host : String, port : Int32, tls : Bool, proxy_protocol : Bool)
       tls_ctx = OpenSSL::SSL::Context::Client.new if tls
+      puts "tls_ctx created"
       ::HTTP::WebSocketHandler.new do |ws, ctx|
         req = ctx.request
         local_addr = req.local_address.as(Socket::IPAddress)
@@ -19,8 +20,10 @@ module WebSocketTCPRelay
         tcp_socket.tcp_keepalive_count = 3
         socket =
           if ctx = tls_ctx
-            OpenSSL::SSL::Socket::Client.new(tcp_socket, ctx, hostname: host).tap do |c|
+          puts "Created in TLS"    
+          OpenSSL::SSL::Socket::Client.new(tcp_socket, ctx, hostname: host).tap do |c|
               c.sync_close = true
+            
             end
           else
             tcp_socket
