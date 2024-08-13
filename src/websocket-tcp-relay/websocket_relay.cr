@@ -79,7 +79,7 @@ module WebSocketTCPRelay
           rescue ex
           puts "#{remote_addr} disconnected-LOOP: #{ex.inspect}"
           ensure
-            mem = nil
+            mem.close
             buffer = nil
             ws.close rescue nil
             socket.close rescue nil
