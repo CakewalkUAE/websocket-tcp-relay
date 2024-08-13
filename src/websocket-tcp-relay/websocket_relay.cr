@@ -84,8 +84,7 @@ module WebSocketTCPRelay
             ws.close rescue nil
             socket.close rescue nil
             amqp_protocol.close rescue nil
-             # Nil out the context to allow GC to clean it up
-            tls_ctx = nil if tls_ctx
+            
           end
         end
         puts "#{remote_addr} connected to upstream"
@@ -93,6 +92,8 @@ module WebSocketTCPRelay
         puts "#{remote_addr} disconnected: #{ex.inspect}"
         socket.try(&.close) rescue nil
         ws.close rescue nil
+        # Nil out the context to allow GC to clean it up
+        tls_ctx = nil if tls_ctx
       
       end
     end
