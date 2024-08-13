@@ -60,8 +60,9 @@ module WebSocketTCPRelay
         end
         spawn(name: "WS #{remote_addr}") do
           begin
-            if amqp_protocol.receive
               mem = IO::Memory.new(4096)
+              buffer = Bytes.new(4096)
+            if amqp_protocol.receive
               loop do
                 frame = AMQ::Protocol::Frame.from_io(socket)
                 frame.to_io(mem, IO::ByteFormat::NetworkEndian)
@@ -69,7 +70,6 @@ module WebSocketTCPRelay
                 mem.clear
               end
             else
-              buffer = Bytes.new(4096)
               count = 0
               while (count = socket.read(buffer)) > 0
                 ws.send(buffer[0, count])
