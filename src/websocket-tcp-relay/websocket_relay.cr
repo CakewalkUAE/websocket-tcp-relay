@@ -94,11 +94,11 @@ module WebSocketTCPRelay
         ws.close rescue nil
         # Nil out the context to allow GC to clean it up
         tls_ctx = nil if tls_ctx
-      ensure
-        ws.try(&.close) rescue nil
-        amqp_protocol.try(&.close) rescue nil
-        socket.try(&.close) rescue nil
-        puts "#{remote_addr} disconnected in Ensure"; 
+      #ensure
+        # ws.try(&.close) rescue nil
+        # amqp_protocol.try(&.close) rescue nil
+        # socket.try(&.close) rescue nil
+        #puts "#{remote_addr} disconnected in Ensure"; 
       end
     end
 
