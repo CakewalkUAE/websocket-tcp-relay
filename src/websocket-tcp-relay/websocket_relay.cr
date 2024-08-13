@@ -75,9 +75,9 @@ module WebSocketTCPRelay
                 ws.send(buffer[0, count])
               end
             end
-            puts "#{remote_addr} disconnected by server"
+            puts "#{remote_addr} disconnected-LOOP by server"
           rescue ex
-            puts "#{remote_addr} disconnected: #{ex.inspect}"
+          puts "#{remote_addr} disconnected-LOOP: #{ex.inspect}"
           ensure
             mem = nil
             buffer = nil
