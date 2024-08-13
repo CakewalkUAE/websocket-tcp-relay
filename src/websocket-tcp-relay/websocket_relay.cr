@@ -83,6 +83,7 @@ module WebSocketTCPRelay
             buffer = nil
             ws.close rescue nil
             socket.close rescue nil
+            amqp_protocol.close rescue nil
           end
         end
         puts "#{remote_addr} connected to upstream"
